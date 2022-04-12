@@ -1,17 +1,17 @@
 {
-  "name": "untilted",
+  "name": "jest-database-containers",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
   "private": true,
-  "author": "your-username",
+  "author": "Ivan Vlatkovic",
   "license": "MIT",
-  "main": "./dist/prod/untilted.js",
-  "umd": "./dist/prod/untilted.umd.js",
+  "main": "./dist/prod/jest-database-containers.js",
+  "umd": "./dist/prod/jest-database-containers.umd.js",
   "exports": {
-    "development": "./dist/dev/untilted.esm.js",
-    "import": "./dist/prod/untilted.esm.js",
-    "require": "./dist/prod/untilted.js"
+    "development": "./dist/dev/jest-database-containers.esm.js",
+    "import": "./dist/prod/jest-database-containers.esm.js",
+    "require": "./dist/prod/jest-database-containers.js"
   },
   "types": "./dist/types/index.d.ts",
   "files": [
@@ -22,6 +22,7 @@
     "lint": "eslint --fix \"src/**/\"",
     "lint:check": "eslint \"src/**/\"",
     "lint:ci": "pnpm lint:check",
+    "test:db": "jest --projects src/__tests__/db/jest-setup",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --ci --coverage --coverageDirectory=coverage",
@@ -35,12 +36,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/untilted.git"
+    "url": "git+https://github.com/ivandotv/jest-database-containers.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/untilted/issues"
+    "url": "https://github.com/ivandotv/jest-database-containers/issues"
   },
-  "homepage": "https://github.com/your-username/untilted#readme",
+  "homepage": "https://github.com/ivandotv/jest-database-containers#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
@@ -68,5 +69,8 @@
     "testcontainers": "^8.6.1",
     "typedoc": "^0.22.13",
     "typedoc-plugin-markdown": "^3.11.14"
+  },
+  "dependencies": {
+    "mongodb": "^4.5.0"
   }
 }
