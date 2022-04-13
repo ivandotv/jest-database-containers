@@ -38,9 +38,9 @@ jobs:
 
       - name: Container Mongo cache
         id: mongo-cache
-        uses: actions/cache@v2
         env:
           image_tag: mongo:5.0.7
+        uses: actions/cache@v2
         with:
           path: ~/mongo-cache
           key: mongo-cache-${{ runner.os }}-${{env.image_tag}}
