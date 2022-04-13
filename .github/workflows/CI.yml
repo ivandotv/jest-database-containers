@@ -39,16 +39,16 @@ jobs:
       - name: Container Mongo cache
         id: mongo-cache
         env:
-          image_tag: mongo:5.0.7
+          IMAGE_TAG: mongo:5.0.7
         uses: actions/cache@v2
         with:
           path: ~/mongo-cache
-          key: mongo-cache-${{ runner.os }}-${{env.image_tag}}
+          key: mongo-cache-${{ runner.os }}-${{env.IMAGE_TAG}}
 
       - if: steps.mongo-cache.outputs.cache-hit != 'true'
         run: |
-          docker pull $image_tag
-          docker save -o ~/mongo-cache/mongo.tar $image_tag
+          docker pull $IMAGE_TAG
+          docker save -o ~/mongo-cache/mongo.tar $IMAGE_TAG
 
       - if: steps.mongo-cache.outputs.cache-hit == 'true'
         run: docker load -i ~/mongo-cache/mongo.tar
