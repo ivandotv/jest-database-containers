@@ -11,8 +11,6 @@ jobs:
   build:
     name: Node unit tests
     runs-on: ubuntu-latest
-    env:
-      IMAGE_TAG: mongo:5.0.7
     strategy:
       matrix:
         # node: ['12', '14', '16']
@@ -37,22 +35,6 @@ jobs:
         with:
           version: 6.23.6
           run_install: true
-
-      - name: Container Mongo cache
-        id: mongo-cache
-        uses: actions/cache@v2
-        with:
-          path: ~/mongo-cache
-          key: mongo-cache-${{ runner.os }}-${{env.IMAGE_TAG}}
-
-      - if: steps.mongo-cache.outputs.cache-hit != 'true'
-        run: |
-          docker pull $IMAGE_TAG
-          mkdir -p ~/mongo-cache
-          docker save -o ~/mongo-cache/mongo.tar $IMAGE_TAG
-
-      - if: steps.mongo-cache.outputs.cache-hit == 'true'
-        run: docker load -i ~/mongo-cache/mongo.tar
 
       - name: Run tests
         run: |
