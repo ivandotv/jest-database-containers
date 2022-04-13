@@ -48,6 +48,7 @@ jobs:
       - if: steps.mongo-cache.outputs.cache-hit != 'true'
         run: |
           docker pull $IMAGE_TAG
+          mkdir -p ~/mongo-cache
           docker save -o ~/mongo-cache/mongo.tar $IMAGE_TAG
 
       - if: steps.mongo-cache.outputs.cache-hit == 'true'
