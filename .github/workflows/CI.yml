@@ -11,6 +11,8 @@ jobs:
   build:
     name: Node unit tests
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: mongo:5.0.7
     strategy:
       matrix:
         # node: ['12', '14', '16']
@@ -38,8 +40,6 @@ jobs:
 
       - name: Container Mongo cache
         id: mongo-cache
-        env:
-          IMAGE_TAG: mongo:5.0.7
         uses: actions/cache@v2
         with:
           path: ~/mongo-cache
