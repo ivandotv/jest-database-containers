@@ -9,10 +9,12 @@ module.exports = async (_config: any) => {
   if (firstRun) {
     console.log('\nGlobal setup started')
 
-    const containerBuilder = new GenericContainer('mongo').withExposedPorts(
-      27017
-    )
+    const containerBuilder = new GenericContainer(
+      'mongo:5.0.7'
+    ).withExposedPorts(27017)
+
     if (type() === 'Linux') {
+      console.log('mongo: using tmpsf mount')
       containerBuilder.withTmpFs({ '/data/db': '' })
     }
 
