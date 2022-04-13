@@ -1,6 +1,6 @@
 import { MongoUserRepository } from '../../../src/mong-user-repository'
 import { MongoConnection } from '../../../src/mongo-connection'
-import { connectToMongoTestDb, seedMongoUsers } from './mongo-test-utils'
+import { connectToMongoTestDb, seedMongoUsers } from './utils/mongo-test-utils'
 
 let connection: MongoConnection
 
