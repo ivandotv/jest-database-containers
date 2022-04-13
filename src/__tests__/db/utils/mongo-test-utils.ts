@@ -1,4 +1,4 @@
-import { MongoConnection, mongoConnection } from '../../../src/mongo-connection'
+import { MongoConnection, mongoConnection } from '../../../mongo-connection'
 
 export function connectToMongoTestDb(dbName?: string) {
   const workerId = process.env.JEST_WORKER_ID || 1
