@@ -37,17 +37,17 @@ jobs:
           run_install: true
 
       - name: Container Mongo cache
-        env:
-          image_tag: mongo:5.0.7
         id: mongo-cache
         uses: actions/cache@v2
+        env:
+          image_tag: mongo:5.0.7
         with:
           path: ~/mongo-cache
-          key: mongo-cache-${{ runner.os }}-${{image_tag}}
+          key: mongo-cache-${{ runner.os }}-${{env.image_tag}}
 
       - if: steps.mongo-cache.outputs.cache-hit != 'true'
         run: |
-          docker pull ${{image_tag}}
+          docker pull ${{env.image_tag}}
           docker save -o ~/mongo-cache/mongo.tar alpine
 
       - if: steps.mongo-cache.outputs.cache-hit == 'true'
