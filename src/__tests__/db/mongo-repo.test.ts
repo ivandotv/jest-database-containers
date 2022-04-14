@@ -1,4 +1,4 @@
-import { MongoUserRepository } from '../../../src/mong-user-repository'
+import { MongoUserRepository } from '../../mongo-user-repository'
 import { MongoConnection } from '../../../src/mongo-connection'
 import { connectToMongoTestDb, seedMongoUsers } from './utils/mongo-test-utils'
 
