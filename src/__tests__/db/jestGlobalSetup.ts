@@ -1,5 +1,6 @@
 import { GenericContainer } from 'testcontainers'
 import { type } from 'os'
+import timeSpan from 'time-span'
 
 global.containers = []
 
@@ -7,7 +8,8 @@ let firstRun = true
 
 module.exports = async (_config: any) => {
   if (firstRun) {
-    console.log('\nGlobal setup started')
+    console.log('\nsetup started')
+    const end = timeSpan()
 
     const containerBuilder = new GenericContainer(
       'mongo:5.0.7'
@@ -26,7 +28,7 @@ module.exports = async (_config: any) => {
 
     global.containers.push(startedContainer)
 
-    console.log('Global setup done')
+    console.log(`setup done in: ${end.seconds()} seconds`)
   }
 
   firstRun = false
@@ -36,14 +38,10 @@ async function startContainer(
   containerBuilder: GenericContainer,
   name: string
 ) {
-  const label = `${name} container started in`
-
-  console.log(`starting ${name} container`)
-  console.time(label)
-
+  const end = timeSpan()
   const startedContainer = await containerBuilder.start()
 
-  console.timeEnd(label)
+  console.log(`${name} started in: ${end.seconds()} seconds`)
 
   return startedContainer
 }

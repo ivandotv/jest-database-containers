@@ -5,7 +5,6 @@ const currentPath = 'src/__tests__/db'
 module.exports = {
   ...parenConfig,
   projects: undefined,
-  name: 'db',
   displayName: 'database',
   rootDir: '../../../',
   testMatch: [`<rootDir>${currentPath}/**/?(*.)+(spec|test).[jt]s?(x)`],

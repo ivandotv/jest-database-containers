@@ -25,6 +25,7 @@ specifiers:
   prettier: ^2.6.2
   shx: ^0.3.4
   testcontainers: ^8.9.0
+  time-span: ^4.0.0
   typescript: ^4.6.4
 
 dependencies:
@@ -54,6 +55,7 @@ devDependencies:
   prettier: 2.6.2
   shx: 0.3.4
   testcontainers: 8.9.0
+  time-span: 4.0.0
   typescript: 4.6.4
 
 packages:
@@ -2964,6 +2966,11 @@ packages:
     resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
     dependencies:
       source-map: 0.6.1
+    dev: true
+
+  /convert-hrtime/3.0.0:
+    resolution: {integrity: sha512-7V+KqSvMiHp8yWDuwfww06XleMWVVB9b9tURBx+G7UTADuo5hYPuowKloz4OzOqbPezxgo+fdQ1522WzPG4OeA==}
+    engines: {node: '>=8'}
     dev: true
 
   /convert-source-map/1.8.0:
@@ -7046,6 +7053,13 @@ packages:
 
   /through/2.3.8:
     resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=}
+    dev: true
+
+  /time-span/4.0.0:
+    resolution: {integrity: sha512-MyqZCTGLDZ77u4k+jqg4UlrzPTPZ49NDlaekU6uuFaJLzPIN1woaRXCbGeqOfxwc3Y37ZROGAJ614Rdv7Olt+g==}
+    engines: {node: '>=10'}
+    dependencies:
+      convert-hrtime: 3.0.0
     dev: true
 
   /tiny-glob/0.2.9:

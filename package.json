@@ -57,6 +57,7 @@
     "prettier": "^2.6.2",
     "shx": "^0.3.4",
     "testcontainers": "^8.9.0",
+    "time-span": "^4.0.0",
     "typescript": "^4.6.4"
   },
   "dependencies": {
