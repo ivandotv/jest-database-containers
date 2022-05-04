@@ -1,10 +1,10 @@
-import { MongoUserRepository } from '../../mongo-user-repository'
-import { MongoConnection } from '../../../src/mongo-connection'
+import { MongoConnection } from '../../mongo/mongo-connection'
+import { MongoUserRepository } from '../../mongo/mongo-repository'
 import { connectToMongoTestDb, seedMongoUsers } from './utils/mongo-test-utils'
 
 let connection: MongoConnection
 
-describe('Mongo Repository test', () => {
+describe('Mongo Repository', () => {
   beforeAll(async () => {
     connection = await connectToMongoTestDb()
   })
