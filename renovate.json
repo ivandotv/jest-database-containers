@@ -2,6 +2,8 @@
   "extends": ["config:base", "schedule:earlyMondays"],
   "rangeStrategy": "replace",
   "labels": ["dependencies"],
+  "timezone": "Europe/Amsterdam",
+  "ignoreDeps": ["time-span"],
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
