@@ -4,7 +4,7 @@ import {
 } from '../../../mongo/mongo-connection'
 
 export function connectToMongoTestDb(dbName?: string) {
-  const workerId = process.env.JEST_WORKER_ID || 1
+  const workerId = process.env.JEST_WORKER_ID!
 
   dbName = dbName || `test_db_${workerId}`
 
