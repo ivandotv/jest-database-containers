@@ -27,6 +27,6 @@ export class MongoRepository {
   async getAllUsers() {
     const result = this.db.collection<User>('users').find()
 
-    return result
+    return result.toArray()
   }
 }
