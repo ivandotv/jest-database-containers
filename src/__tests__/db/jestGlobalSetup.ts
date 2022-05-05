@@ -11,10 +11,15 @@ module.exports = async (_config: any) => {
     console.log('\nsetup started')
     const end = timeSpan()
 
-    const mongoContainer = await initializeMongo()
-    const postgresContainer = await initializePostgres()
+    const mongoContainer = initializeMongo()
+    const postgresContainer = initializePostgres()
 
-    global.containers.push(mongoContainer, postgresContainer)
+    const startedContainers = await Promise.all([
+      mongoContainer,
+      postgresContainer
+    ])
+
+    global.containers.push(...startedContainers)
 
     console.log(`setup done in: ${end.seconds()} seconds`)
   }
@@ -28,7 +33,7 @@ async function initializeMongo() {
   )
 
   if (type() === 'Linux') {
-    console.log('mongo: using tmpsf mount')
+    console.log('mongo: using tmpfs mount')
     mongoContainer.withTmpFs({ '/data/db': '' })
   }
 
@@ -53,7 +58,7 @@ async function initializePostgres() {
     .withEnv('POSTGRES_DB', POSTGRES_DB)
 
   if (type() === 'Linux') {
-    console.log('postgres: using tmpsf mount')
+    console.log('postgres: using tmpfs mount')
     postgresContainer.withTmpFs({ '/var/lib/postgresql/data': '' })
   }
 
