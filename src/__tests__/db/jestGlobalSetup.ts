@@ -1,5 +1,5 @@
-import { GenericContainer } from 'testcontainers'
 import { type } from 'os'
+import { GenericContainer } from 'testcontainers'
 import timeSpan from 'time-span'
 
 global.containers = []
@@ -11,27 +11,62 @@ module.exports = async (_config: any) => {
     console.log('\nsetup started')
     const end = timeSpan()
 
-    const containerBuilder = new GenericContainer(
-      'mongo:5.0.7'
-    ).withExposedPorts(27017)
+    const mongoContainer = await initializeMongo()
+    const postgresContainer = await initializePostgres()
 
-    if (type() === 'Linux') {
-      console.log('mongo: using tmpsf mount')
-      containerBuilder.withTmpFs({ '/data/db': '' })
-    }
-
-    const startedContainer = await startContainer(containerBuilder, 'mongo')
-
-    process.env.MONGO_PORT = startedContainer.getMappedPort(
-      27017
-    ) as unknown as string
-
-    global.containers.push(startedContainer)
+    global.containers.push(mongoContainer, postgresContainer)
 
     console.log(`setup done in: ${end.seconds()} seconds`)
   }
 
   firstRun = false
+}
+
+async function initializeMongo() {
+  const mongoContainer = new GenericContainer('mongo:5.0.7').withExposedPorts(
+    27017
+  )
+
+  if (type() === 'Linux') {
+    console.log('mongo: using tmpsf mount')
+    mongoContainer.withTmpFs({ '/data/db': '' })
+  }
+
+  const mongoStarted = await startContainer(mongoContainer, 'mongo')
+
+  process.env.MONGO_PORT = mongoStarted.getMappedPort(
+    27017
+  ) as unknown as string
+
+  return mongoStarted
+}
+
+async function initializePostgres() {
+  const POSTGRES_USER = 'admin'
+  const POSTGRES_PASSWORD = 'admin-123'
+  const POSTGRES_DB = 'admin'
+
+  const postgresContainer = new GenericContainer('postgres:14.2')
+    .withExposedPorts(5432)
+    .withEnv('POSTGRES_USER', POSTGRES_USER)
+    .withEnv('POSTGRES_PASSWORD', POSTGRES_PASSWORD)
+    .withEnv('POSTGRES_DB', POSTGRES_DB)
+
+  if (type() === 'Linux') {
+    console.log('postgres: using tmpsf mount')
+    postgresContainer.withTmpFs({ '/var/lib/postgresql/data': '' })
+  }
+
+  const postgresStarted = await startContainer(postgresContainer, 'postgress')
+
+  process.env.POSTGRES_PORT = postgresStarted.getMappedPort(
+    5432
+  ) as unknown as string
+  process.env.POSTGRES_USER = POSTGRES_USER
+  process.env.POSTGRES_PASSWORD = POSTGRES_PASSWORD
+  process.env.POSTGRES_DB = POSTGRES_DB
+
+  return postgresStarted
 }
 
 async function startContainer(

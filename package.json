@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "test:db": "jest --selectProjects database",
-    "test": "jest --verbose --coverage",
+    "test": "jest --verbose",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --ci --coverage --coverageDirectory=coverage",
     "prepare": "husky install"
@@ -39,6 +39,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@changesets/cli": "^2.22.0",
     "@types/jest": "^27.5.0",
+    "@types/pg": "^8.6.5",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "cross-env": "^7.0.3",
@@ -54,6 +55,7 @@
     "jest-watch-typeahead": "^1.1.0",
     "lint-staged": "^12.4.1",
     "microbundle": "^0.15.0",
+    "pg": "^8.7.3",
     "prettier": "^2.6.2",
     "shx": "^0.3.4",
     "testcontainers": "^8.9.0",

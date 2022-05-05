@@ -11,7 +11,7 @@ module.exports = async (config: any) => {
   //tear it down
   const stopped = []
   for (const container of global.containers) {
-    stopped.push(container.stop({ timeout: 5000 }))
+    stopped.push(container.stop({ timeout: 10000 }))
   }
 
   await Promise.all(stopped)

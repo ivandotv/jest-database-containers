@@ -1,0 +1,60 @@
+import { readFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
+import { Pool, PoolConfig } from 'pg'
+import { postgresConnection } from '../../../postgres/postgres-connection'
+
+let seedFile: string
+const testDbName = `TEST_DB_${process.env.JEST_WORKER_ID}`
+
+export async function createTestDatabase() {
+  const connectionConfig: PoolConfig = {
+    host: 'localhost',
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    port: Number(process.env.POSTGRES_PORT)
+  }
+
+  const connection = await postgresConnection(connectionConfig)
+
+  await connection.query(`DROP DATABASE IF EXISTS ${testDbName}`)
+  await connection.query(`CREATE DATABASE ${testDbName}`)
+  await connection.end()
+}
+
+export function connectToTestDatbase() {
+  const connectionConfig: PoolConfig = {
+    host: 'localhost',
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    port: Number(process.env.POSTGRES_PORT)
+  }
+
+  return postgresConnection(connectionConfig)
+}
+
+export async function seedDatabase(client: Pool) {
+  if (!seedFile) {
+    seedFile = await readFile(resolve(__dirname, './seed.sql'), {
+      encoding: 'utf8'
+    })
+  }
+  await client.query(seedFile)
+}
+
+export async function resetDatabase(client: Pool) {
+  await client.query(`
+      DO
+      $func$
+      BEGIN
+        EXECUTE (
+          SELECT 'TRUNCATE TABLE ' || string_agg(oid::regclass::text, ', ') || ' CASCADE'
+            FROM pg_class
+            WHERE relkind = 'r'
+            AND relnamespace = 'public'::regnamespace
+        );
+      END
+      $func$;
+    `)
+}
