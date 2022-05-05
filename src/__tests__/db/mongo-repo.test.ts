@@ -1,6 +1,6 @@
 import { MongoConnection } from '../../mongo/mongo-connection'
-import { MongoUserRepository } from '../../mongo/mongo-repository'
-import { connectToMongoTestDb, seedMongoUsers } from './utils/mongo-test-utils'
+import { MongoRepository } from '../../mongo/mongo-repository'
+import { connectToMongoTestDb, seedDatabase } from './utils/mongo-test-utils'
 
 let connection: MongoConnection
 
@@ -10,20 +10,21 @@ describe('Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    await seedMongoUsers(connection)
+    //seed the db
+    await seedDatabase(connection)
   })
   afterEach(async () => {
-    //drop db
+    //drop the db
     await connection.db.dropDatabase()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     //close connection to the database
-    connection.client.close()
+    await connection.client.close()
   })
 
   test('Get user by email', async () => {
-    const repository = new MongoUserRepository(connection)
+    const repository = new MongoRepository(connection)
     const email = 'ivan@example.com'
 
     const user = await repository.getUserByEmail(email)
@@ -32,7 +33,7 @@ describe('Mongo Repository', () => {
   })
 
   test('Create user', async () => {
-    const repository = new MongoUserRepository(connection)
+    const repository = new MongoRepository(connection)
     const newUser = {
       name: 'Johhny',
       lastName: 'Bravo',
@@ -45,5 +46,14 @@ describe('Mongo Repository', () => {
     expect(user).toBeTruthy()
     expect(returnedUser?.name).toBe(newUser.name)
     expect(returnedUser?.lastName).toBe(newUser.lastName)
+  })
+
+  test('Count users', async () => {
+    const repository = new MongoRepository(connection)
+
+    const allUsers = await repository.getAllUsers()
+
+    //3 users from initial seed
+    expect(allUsers).toHaveLength(3)
   })
 })

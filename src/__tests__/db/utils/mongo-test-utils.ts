@@ -14,7 +14,7 @@ export function connectToMongoTestDb(dbName?: string) {
   return mongoConnection(uri, dbName)
 }
 
-export async function seedMongoUsers(connection: MongoConnection) {
+export async function seedDatabase(connection: MongoConnection) {
   const result = await connection.db.collection('users').insertMany([
     { name: 'Ivan', lastName: 'Bambino', email: 'ivan@example.com' },
     { name: 'Mario', lastName: 'Markoni', email: 'mario@example.com' },

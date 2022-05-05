@@ -6,7 +6,7 @@ export type User = {
   lastName: string
   email: string
 }
-export class MongoUserRepository {
+export class MongoRepository {
   client: MongoClient
 
   db: Db
@@ -22,5 +22,11 @@ export class MongoUserRepository {
 
   async createUser(user: { name: string; lastName: string; email: string }) {
     return this.db.collection<User>('users').insertOne(user)
+  }
+
+  async getAllUsers() {
+    const result = this.db.collection<User>('users').find()
+
+    return result
   }
 }
