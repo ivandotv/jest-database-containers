@@ -17,12 +17,16 @@ export async function createTestDatabase() {
 
   const connection = await postgresConnection(connectionConfig)
 
-  await connection.query(`DROP DATABASE IF EXISTS ${testDbName}`)
   await connection.query(`CREATE DATABASE ${testDbName}`)
   await connection.end()
 }
 
-export function connectToTestDatbase() {
+export async function connectToTestDatbase() {
+  //in watch mode run only once
+  if (process.env.JEST_FIRST_RUN === 'yes') {
+    await createTestDatabase()
+  }
+
   const connectionConfig: PoolConfig = {
     host: 'localhost',
     user: process.env.POSTGRES_USER,
@@ -36,6 +40,7 @@ export function connectToTestDatbase() {
 
 export async function seedDatabase(client: Pool) {
   if (!seedFile) {
+    //load seed file only once
     seedFile = await readFile(resolve(__dirname, './seed.sql'), {
       encoding: 'utf8'
     })

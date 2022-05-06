@@ -2,7 +2,6 @@ import { Pool } from 'pg'
 import { PostgresRepository } from '../../postgres/postgres-repository'
 import {
   connectToTestDatbase,
-  createTestDatabase,
   resetDatabase,
   seedDatabase
 } from './utils/postgres-test-utils'
@@ -11,7 +10,6 @@ let connection: Pool
 
 describe('Postgres', () => {
   beforeAll(async () => {
-    await createTestDatabase()
     connection = await connectToTestDatbase()
   })
 
