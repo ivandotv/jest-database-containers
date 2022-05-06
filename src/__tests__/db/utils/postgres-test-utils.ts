@@ -49,6 +49,8 @@ export async function seedDatabase(client: Pool) {
 }
 
 export async function resetDatabase(client: Pool) {
+  // truncate all tables in the database
+  // https://stackoverflow.com/a/12082038/1489487
   await client.query(`
       DO
       $func$
