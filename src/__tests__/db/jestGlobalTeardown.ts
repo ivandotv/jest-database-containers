@@ -1,6 +1,6 @@
 import timeSpan from 'time-span'
 
-module.exports = async (config: any) => {
+export default async (config: any) => {
   const { watch, watchAll } = config
 
   //do not run teardown in watch mode

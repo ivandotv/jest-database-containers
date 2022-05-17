@@ -6,7 +6,7 @@ global.containers = []
 
 let firstRun = true
 
-module.exports = async (_config: any) => {
+export default async (_config: any) => {
   process.env.JEST_FIRST_RUN = firstRun ? 'yes' : 'no'
 
   if (firstRun) {
