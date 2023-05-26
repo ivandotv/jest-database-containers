@@ -55,9 +55,11 @@ async function initializePostgres() {
 
   const postgresContainer = new GenericContainer('postgres:14.2')
     .withExposedPorts(5432)
-    .withEnv('POSTGRES_USER', POSTGRES_USER)
-    .withEnv('POSTGRES_PASSWORD', POSTGRES_PASSWORD)
-    .withEnv('POSTGRES_DB', POSTGRES_DB)
+    .withEnvironment({
+      POSTGRES_USER: POSTGRES_USER,
+      POSTGRES_PASSWORD: POSTGRES_PASSWORD,
+      POSTGRES_DB: POSTGRES_DB
+    })
 
   if (type() === 'Linux') {
     console.log('postgres: using tmpfs mount')
