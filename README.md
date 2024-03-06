@@ -1,3 +1,6 @@
+### Archived
+This repository is archived in favor of [vitest database containers](https://github.com/ivandotv/vitest-database-containers). It's the same setup but only with [Vitest](https://vitest.dev/)
+
 # MongoDB and PostgreSQL database testing with Jest and Docker containers
 
 This is an example repository that demonstrates how to test MongoDB and PostgreSQL databases with Docker containers
